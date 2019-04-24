@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>竞拍结果</title>
+<link href="/css/common.css" rel="stylesheet" type="text/css" />
+<link href="/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div class="wrap">
+		<!-- main begin-->
+		<div class="sale">
+			<h1 class="lf">拍卖结束的商品</h1>
+			<div class="right rulse">
+				当前用户是：<span class="blue strong" th:text="${session.user.username}"></span>
+			</div>
+			<div class="cl"></div>
+		</div>
+
+		<div class="items" th:if="${not #lists.isEmpty(endtimeList)}">
+			<ul class="rows even strong">
+				<li>名称</li>
+				<li>开始时间</li>
+				<li>结束时间</li>
+				<li>起拍价</li>
+				<li class="list-wd">成交价</li>
+				<li class="borderno">买家</li>
+			</ul> 
+			<ul th:each="auction,state:${endtimeList}" th:class="${state.odd}?'rows':'rows even'">
+				<li th:text="${auction.auctionname}"></li>
+				<li th:text="${#dates.format(auction.auctionstarttime,'yyyy-MM-dd')}"></li>
+				<li th:text="${#dates.format(auction.auctionendtime,'yyyy-MM-dd')}"></li>
+				<li th:text="${auction.auctionstartprice}"></li>
+				<li class="list-wd" th:text="${auction.auctionprice}"></li>
+				<li class="borderno red" th:text="${auction.username}"></li>
+			</ul>
+		</div>
+			
+		<ul class="rows even strong" th:if="${#lists.isEmpty(endtimeList)}">
+			<li>无记录</li>
+		</ul>
+
+		<h1>拍卖中的商品</h1>
+		<div class="items records" th:if="${not #lists.isEmpty(noendtimeList)}">
+			<ul class="rows even strong rowh">
+				<li>名称</li>
+				<li>开始时间</li>
+				<li>结束时间</li>
+				<li>起拍价</li>
+				<li class="borderno record">出价记录</li>
+				<div class="cl"></div>
+			</ul>
+			<ul th:each="auctionDetail,state:${noendtimeList}" th:class="${state.odd}?'rows':'rows even'">
+				<li th:text="${auctionDetail.auctionname}"></li>
+				<li th:text="${#dates.format(auctionDetail.auctionstarttime,'yyyy-MM-dd hh:mm:ss')}"></li>
+				<li th:text="${#dates.format(auctionDetail.auctionendtime,'yyyy-MM-dd hh:mm:ss')}"></li>
+				<li th:text="${auctionDetail.auctionstartprice}"></li>
+				
+				<li class="borderno blue record">
+					<p th:each="record:${auctionDetail.auctionRecoreList}">
+					   <span th:text="${record.user.username}"></span>
+					   &nbsp;&nbsp;
+					   <span th:text="${record.auctionprice}"></span>元
+					</p>
+				</li>
+				
+				<div class="cl"></div>
+			</ul>
+		</div>
+		<ul class="rows even strong" th:if="${#lists.isEmpty(noendtimeList)}">
+			<li>无记录</li>
+		</ul>
+		<!-- main end-->
+	 <br/>
+	 <input type="button" value="返回列表" class="spbg buttombg f14" 
+    		onclick="location='/selectAllAuction'" />
+	</div>
+</body>
+</html>

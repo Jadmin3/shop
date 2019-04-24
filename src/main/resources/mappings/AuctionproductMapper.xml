@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yq.shop.mapper.AuctionproductMapper" >
+  <resultMap id="BaseResultMap" type="cn.yq.shop.pojo.Auctionproduct" >
+    <id column="auctionId" property="auctionid" jdbcType="INTEGER" />
+    <result column="auctionName" property="auctionname" jdbcType="VARCHAR" />
+    <result column="auctionStartPrice" property="auctionstartprice" jdbcType="DECIMAL" />
+    <result column="auctionUpset" property="auctionupset" jdbcType="DECIMAL" />
+    <result column="auctionStartTime" property="auctionstarttime" jdbcType="TIMESTAMP" />
+    <result column="auctionEndTime" property="auctionendtime" jdbcType="TIMESTAMP" />
+    <result column="auctionPic" property="auctionpic" jdbcType="VARCHAR" />
+    <result column="auctionPicType" property="auctionpictype" jdbcType="VARCHAR" />
+    <result column="auctionDesc" property="auctiondesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    auctionId, auctionName, auctionStartPrice, auctionUpset, auctionStartTime, auctionEndTime, 
+    auctionPic, auctionPicType, auctionDesc
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.yq.shop.pojo.AuctionproductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from auctionproduct
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from auctionproduct
+    where auctionId = #{auctionid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from auctionproduct
+    where auctionId = #{auctionid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.yq.shop.pojo.AuctionproductExample" >
+    delete from auctionproduct
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.yq.shop.pojo.Auctionproduct" >
+    insert into auctionproduct (auctionId, auctionName, auctionStartPrice, 
+      auctionUpset, auctionStartTime, auctionEndTime, 
+      auctionPic, auctionPicType, auctionDesc
+      )
+    values (#{auctionid,jdbcType=INTEGER}, #{auctionname,jdbcType=VARCHAR}, #{auctionstartprice,jdbcType=DECIMAL}, 
+      #{auctionupset,jdbcType=DECIMAL}, #{auctionstarttime,jdbcType=TIMESTAMP}, #{auctionendtime,jdbcType=TIMESTAMP}, 
+      #{auctionpic,jdbcType=VARCHAR}, #{auctionpictype,jdbcType=VARCHAR}, #{auctiondesc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.yq.shop.pojo.Auctionproduct" >
+    insert into auctionproduct
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="auctionid != null" >
+        auctionId,
+      </if>
+      <if test="auctionname != null" >
+        auctionName,
+      </if>
+      <if test="auctionstartprice != null" >
+        auctionStartPrice,
+      </if>
+      <if test="auctionupset != null" >
+        auctionUpset,
+      </if>
+      <if test="auctionstarttime != null" >
+        auctionStartTime,
+      </if>
+      <if test="auctionendtime != null" >
+        auctionEndTime,
+      </if>
+      <if test="auctionpic != null" >
+        auctionPic,
+      </if>
+      <if test="auctionpictype != null" >
+        auctionPicType,
+      </if>
+      <if test="auctiondesc != null" >
+        auctionDesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="auctionid != null" >
+        #{auctionid,jdbcType=INTEGER},
+      </if>
+      <if test="auctionname != null" >
+        #{auctionname,jdbcType=VARCHAR},
+      </if>
+      <if test="auctionstartprice != null" >
+        #{auctionstartprice,jdbcType=DECIMAL},
+      </if>
+      <if test="auctionupset != null" >
+        #{auctionupset,jdbcType=DECIMAL},
+      </if>
+      <if test="auctionstarttime != null" >
+        #{auctionstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auctionendtime != null" >
+        #{auctionendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auctionpic != null" >
+        #{auctionpic,jdbcType=VARCHAR},
+      </if>
+      <if test="auctionpictype != null" >
+        #{auctionpictype,jdbcType=VARCHAR},
+      </if>
+      <if test="auctiondesc != null" >
+        #{auctiondesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.yq.shop.pojo.AuctionproductExample" resultType="java.lang.Integer" >
+    select count(*) from auctionproduct
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update auctionproduct
+    <set >
+      <if test="record.auctionid != null" >
+        auctionId = #{record.auctionid,jdbcType=INTEGER},
+      </if>
+      <if test="record.auctionname != null" >
+        auctionName = #{record.auctionname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auctionstartprice != null" >
+        auctionStartPrice = #{record.auctionstartprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.auctionupset != null" >
+        auctionUpset = #{record.auctionupset,jdbcType=DECIMAL},
+      </if>
+      <if test="record.auctionstarttime != null" >
+        auctionStartTime = #{record.auctionstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.auctionendtime != null" >
+        auctionEndTime = #{record.auctionendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.auctionpic != null" >
+        auctionPic = #{record.auctionpic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auctionpictype != null" >
+        auctionPicType = #{record.auctionpictype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auctiondesc != null" >
+        auctionDesc = #{record.auctiondesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update auctionproduct
+    set auctionId = #{record.auctionid,jdbcType=INTEGER},
+      auctionName = #{record.auctionname,jdbcType=VARCHAR},
+      auctionStartPrice = #{record.auctionstartprice,jdbcType=DECIMAL},
+      auctionUpset = #{record.auctionupset,jdbcType=DECIMAL},
+      auctionStartTime = #{record.auctionstarttime,jdbcType=TIMESTAMP},
+      auctionEndTime = #{record.auctionendtime,jdbcType=TIMESTAMP},
+      auctionPic = #{record.auctionpic,jdbcType=VARCHAR},
+      auctionPicType = #{record.auctionpictype,jdbcType=VARCHAR},
+      auctionDesc = #{record.auctiondesc,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.yq.shop.pojo.Auctionproduct" >
+    update auctionproduct
+    <set >
+      <if test="auctionname != null" >
+        auctionName = #{auctionname,jdbcType=VARCHAR},
+      </if>
+      <if test="auctionstartprice != null" >
+        auctionStartPrice = #{auctionstartprice,jdbcType=DECIMAL},
+      </if>
+      <if test="auctionupset != null" >
+        auctionUpset = #{auctionupset,jdbcType=DECIMAL},
+      </if>
+      <if test="auctionstarttime != null" >
+        auctionStartTime = #{auctionstarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auctionendtime != null" >
+        auctionEndTime = #{auctionendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auctionpic != null" >
+        auctionPic = #{auctionpic,jdbcType=VARCHAR},
+      </if>
+      <if test="auctionpictype != null" >
+        auctionPicType = #{auctionpictype,jdbcType=VARCHAR},
+      </if>
+      <if test="auctiondesc != null" >
+        auctionDesc = #{auctiondesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where auctionId = #{auctionid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.yq.shop.pojo.Auctionproduct" >
+    update auctionproduct
+    set auctionName = #{auctionname,jdbcType=VARCHAR},
+      auctionStartPrice = #{auctionstartprice,jdbcType=DECIMAL},
+      auctionUpset = #{auctionupset,jdbcType=DECIMAL},
+      auctionStartTime = #{auctionstarttime,jdbcType=TIMESTAMP},
+      auctionEndTime = #{auctionendtime,jdbcType=TIMESTAMP},
+      auctionPic = #{auctionpic,jdbcType=VARCHAR},
+      auctionPicType = #{auctionpictype,jdbcType=VARCHAR},
+      auctionDesc = #{auctiondesc,jdbcType=VARCHAR}
+    where auctionId = #{auctionid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>竞拍详情</title>
+<link href="/css/common.css" rel="stylesheet" type="text/css" />
+<link href="/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="wrap">
+<!-- main begin-->
+  <div class="sale">
+    <h1 class="lf">在线拍卖系统</h1>
+	    <!-- 如果用户没有登录进来，显示“登录”链接，否则显示“注销” -->
+	    <span th:if="${session.user != null}">
+	    	 <div class="logout right"><a href="/doLogout" title="注销">注销</a></div>
+	    </span>
+	    <span th:if="${session.user == null}">
+	    	 <div class="logout right"><a href="/login" title="登录">登录</a></div>
+	    </span>  
+  </div>
+  <div class="items sg-font lf">
+      <ul class="rows">
+        <li>名称：</li>
+        <li class="borderno" th:text="${auctionDetail.auctionname}"></li>
+      </ul>
+      <ul class="rows">
+        <li>描述：</li>
+        <li class="borderno" th:text="${auctionDetail.auctiondesc}"></li>
+      </ul>
+      <ul class="rows">
+        <li>开始时间：</li>
+        <li class="borderno">
+         <span th:text="${#dates.format(auctionDetail.auctionstarttime,'yyyy-MM-dd')}"></span>
+        </li>
+      </ul>
+      <ul class="rows">
+        <li>结束时间：</li>
+        <li class="borderno">
+         <span th:text="${#dates.format(auctionDetail.auctionendtime,'yyyy-MM-dd')}"></span>
+       </li>
+      </ul>
+      <ul class="rows border-no">
+        <li>起拍价：</li>
+        <li class="borderno" th:text="${auctionDetail.auctionstartprice}"></li>
+      </ul>
+  </div>
+  <div class="rg borders"><img width="270" height="185" alt="" src="/images/ad20.jpg" /></div>
+  <div class="cl"></div>
+  
+  <form name="myform" th:action="@{/saveAuctionRecord}" method="post">
+	  <div class="top10 salebd">
+	       <p>
+		       <label form="sale">出价：</label>
+		       <input type="text" class="inputwd" name="auctionprice" id="auctionprice" />
+		       <input type="hidden" name="auctionid" th:value="${auctionDetail.auctionid}"/>
+		       <input type="submit" id="jp" value="竞 拍" class="spbg buttombg f14  sale-buttom" />
+	       </p>
+	  </div>
+  </form>
+ 
+  <div class="top10">
+    <input type="button" onclick="window.location.reload()" value="刷 新" class="spbg buttombg f14" />
+    <input type="button" value="返回列表" class="spbg buttombg f14" 
+    		onclick="location='/selectAllAuction'" />
+  </div>
+  <div class="offer">
+    <h3>出价记录</h3>
+    <div class="items sg-font">
+      <ul class="rows even strong">
+        <li>竞拍时间</li>
+        <li>竞拍价格</li>
+        <li class="borderno">竞拍人</li>
+      </ul>
+
+        <!-- 迭代输出竞拍记录 -->
+        <ul   class="rows"
+              th:if="${not #lists.isEmpty(auctionDetail.auctionRecoreList)}"
+              th:each="auctionRecord:${auctionDetail.auctionRecoreList}">
+
+            <li th:text="${#dates.format(auctionRecord.auctiontime,'yyyy-MM-dd')}"></li>
+            <li th:text="${auctionRecord.auctionprice}"></li>
+            <li class="borderno" th:text="${auctionRecord.user.username}"></li>
+
+        </ul>
+   	<!-- 迭代输出竞拍记录 -->
+	<ul class="strong" style="text-align: center;" th:if="${#lists.isEmpty(auctionDetail.auctionRecoreList)}">
+		<li>无竞拍记录</li>
+	</ul>
+
+  </div>
+  </div>
+<!-- main end-->
+</div>
+</body>
+<script>
+
+window.onload = function () {
+    var jp=document.getElementById("jp");
+    jp.onclick = function () {
+        if (document.myform.auctionprice.value==""){
+            alert("竞拍价格不能为空!");
+            document.myform.auctionprice.focus();
+            return false;
+        }
+    }
+
+}
+
+
+</script>
+</html>
