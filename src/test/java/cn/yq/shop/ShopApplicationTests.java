@@ -16,6 +16,7 @@ public class ShopApplicationTests {
     private AuctionService auctionService;
     @Test
     public void contextLoads() {
+        //发现了这个删除方法有bug  有外检 无法删除
         auctionService.deleteAuction(25);
     }
 
