@@ -124,5 +124,28 @@ public class AuctionServiceImpl implements AuctionService {
         return auctionCustomerMapper.selectAuctionNoEndTime();
     }
 
+    /**
+     * 插入产品
+     *
+     * @param auction
+     */
+    @Override
+    public void insertAuction(Auctionproduct auction) {
+        this.auctionproductMapper.insert(auction);
+    }
+
+    /**
+     * 根据id删除产品记录
+     *
+     * @param auctionid
+     */
+    @Override
+    public void deleteAuction(Integer auctionid) {
+
+        this.auctionproductMapper.deleteByPrimaryKey(auctionid);
+        //删除底下的竞拍记录
+        //this.auctionrecordMapper.deleteByPrimaryKey(auctionid);
+    }
+
 
 }

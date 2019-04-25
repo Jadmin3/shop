@@ -41,7 +41,7 @@
       <input type="submit"  value="查询" class="spbg buttombg f14  sale-buttom"/>
     </form>
     <div th:if="${session.user.userisadmin==1}">
-      <input type="button"  value="发布" class="spbg buttombg f14  sale-buttom buttomb"/>
+      <input type="button" onclick="location='/addAuction'"  value="发布" class="spbg buttombg f14  sale-buttom buttomb"/>
     </div>
     <div th:if="${session.user.userisadmin==0}">
       <input type="button" onclick="location='/toAuctionResult'"  value="竞拍结果" class="spbg buttombg f14  sale-buttom buttomb"/>
@@ -68,7 +68,7 @@
         <li class="borderno red">
           <span th:if="${session.user.userisadmin==1}">
             <a th:href="@{/updateAuction/}+@{${auction.auctionid}}" title="竞拍" onclick="dele();">修改</a>|
-            <a  title="删除" th:href="@{/deleteAuction/}+@{${auction.auctionid}}" onclick="abc();">删除</a>
+            <a  title="删除" th:href="@{/deleteAuction/}+@{${auction.auctionid}}">删除</a>
           </span>
           <span th:if="${session.user.userisadmin==0}">
             <a th:href="@{/toAuctionDetial/}+@{${auction.auctionid}}" title="竞拍">竞拍</a>

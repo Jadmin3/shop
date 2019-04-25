@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -89,8 +92,9 @@ public class AuctionController {
      */
     @RequestMapping("/deleteAuction/{auctionid}")
     public String deleteAuction(@PathVariable Integer auctionid){
+        this.auctionService.deleteAuction(auctionid);
 
-        return "";
+        return "redirect:/selectAllAuction";
     }
 
     /**
@@ -122,6 +126,26 @@ public class AuctionController {
         mv.setViewName("auctionResult");
         return mv;
     }
+    @RequestMapping(value = "/addAuction")
+    public String addAuction(){
 
+        return "addAuction";
+    }
 
+    @RequestMapping(value = "/publishAuctions")
+    public String publishAuctions(Auctionproduct auction, MultipartFile pic) throws IllegalStateException, IOException {
+
+        if (pic.getSize() > 0) {
+            File file = new File("E:\\win10", pic.getOriginalFilename());
+
+            pic.transferTo(file);
+
+            auction.setAuctionpic(pic.getOriginalFilename());
+            auction.setAuctionpictype(pic.getContentType());
+
+        }
+        this.auctionService.insertAuction(auction);
+
+        return "redirect:/selectAllAuction";
+    }
 }

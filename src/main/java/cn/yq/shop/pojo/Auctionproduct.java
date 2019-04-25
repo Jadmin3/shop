@@ -93,7 +93,7 @@ public class Auctionproduct {
         this.auctionpic = auctionpic == null ? null : auctionpic.trim();
     }
 
-    public String getAuctionpictype() {
+    public String getAuctionpictype(String contentType) {
         return auctionpictype;
     }
 

@@ -40,4 +40,17 @@ public interface AuctionService {
      * @return 返回AuctionProduct的集合
      */
     List<Auctionproduct> selectAuctionNoEndTime();
+
+    /**
+     * 插入产品
+     * @param auction
+     */
+    void insertAuction(Auctionproduct auction);
+
+    /**
+     * 根据id删除产品记录
+     * @param auctionid
+     */
+    void deleteAuction(Integer auctionid);
+
 }
